@@ -13,5 +13,8 @@
     "ast"
   ],
   "author": "Mr. Hands <mrhands31@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.x"
+  }
 }
