@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
-    "test": "tsc && cd ./tests && tsc"
+    "test": "tsc && cd ./tests && tsc && mocha ../build/tests/**/*.js"
   },
   "keywords": [
     "typescript",

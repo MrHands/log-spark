@@ -1,3 +1,4 @@
+import { $logInfo } from '../../build';
 import { expect } from 'chai';
 
 const output = `${$logInfo('Blah', 'stuff')}`;

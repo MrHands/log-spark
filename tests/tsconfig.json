@@ -2,11 +2,14 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "../build/tests",
-		"rootDir": "./",
 
 		"target": "ESNext",
 		"module": "CommonJS",
 		"esModuleInterop": true,
+
+		"paths": {
+			"~build": ["../build"]
+		},
 
 		"strict": true,
 		"allowJs": false,
@@ -16,21 +19,13 @@
 		"exactOptionalPropertyTypes": true,
 		"strictPropertyInitialization": true,
 		"noUncheckedIndexedAccess": false,
+		"removeComments": true,
 		"skipLibCheck": true
 	},
-	"typeRoots": [
-		"node_modules/@types",
-		"../build"
-	],
 	"exclude": [
 		"webpack.config.ts"
 	],
 	"plugins": [
 		{ "transform": "../build" }
-	],
-	"ts-node": {
-		"compilerOptions": {
-			"module": "CommonJS"
-		}
-	}
+	]
 }
