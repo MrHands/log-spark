@@ -35,12 +35,12 @@ class MacroTransformer {
 		return ts.factory.updateSourceFile(node, statements);
 	}
 
-	visit(node: ts.Node): ts.VisitResult<ts.Node|undefined> {
+	visit(source: ts.Node): ts.VisitResult<ts.Node|undefined> {
 		const visitor = (node: ts.Node): ts.Node => {
 			if (node.pos >= 0
 				&& ts.isCallExpression(node)) {
 				const func = node;
-	
+
 				const macro = this._macros[func.expression.getText()];
 				if (typeof macro === 'undefined') {
 					return node;
@@ -48,11 +48,11 @@ class MacroTransformer {
 
 				return macro(this._context, node);
 			}
-	
+
 			return ts.visitEachChild(node, visitor, this._context);
 		};
-	
-		return ts.visitNode(node, visitor);
+
+		return ts.visitNode(source, visitor);
 	}
 }
 

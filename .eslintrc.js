@@ -227,7 +227,6 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/typescript',
 	],
-	files: ['*.ts'],
 	ignorePatterns: [
 		'build/**',
 	],
