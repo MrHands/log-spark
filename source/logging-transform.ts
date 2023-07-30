@@ -18,8 +18,8 @@ function CreateLogging(levelPrefix: string, consoleMethod: string) {
 
 		let textMessage = '';
 		if (
-			!ts.isTemplateExpression(message) &&
-			!ts.isCallExpression(message)
+			!ts.isTemplateExpression(message)
+			&& !ts.isCallExpression(message)
 		) {
 			textMessage = ` ${(message as ts.StringLiteral).text}`;
 		}
@@ -79,8 +79,7 @@ const Logging: Record<
 	$logFatal: CreateLogging('[FATAL] ', 'error'),
 };
 
-const LoggingTransform = (context: ts.TransformationContext) =>
-(sourceFile: ts.SourceFile) => {
+const LoggingTransform = (context: ts.TransformationContext) => 	(sourceFile: ts.SourceFile) => {
 	const visitor = (node: ts.Node): ts.Node => {
 		if (ts.isCallExpression(node) && node.pos >= 0) {
 			const func = node;
@@ -97,4 +96,4 @@ const LoggingTransform = (context: ts.TransformationContext) =>
 	return ts.visitNode(sourceFile, visitor);
 };
 
-export default LoggingTransform;
+export { LoggingTransform };

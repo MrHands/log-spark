@@ -27,18 +27,27 @@ const preferenceRules = {
 		},
 	],
 
+	// Enforce consistent use of trailing commas in object and array literals
+	'comma-dangle': ['error', {
+		arrays: 'always-multiline',
+		objects: 'always-multiline',
+		imports: 'always-multiline',
+		exports: 'always-multiline',
+		functions: 'never',
+	}],
+
 	// Enforce consistent line breaks after opening and before closing braces
 	'object-curly-newline': [
 		'error',
 		{
 			ExportDeclaration: {
 				multiline: true,
-				minProperties: 1,
+				minProperties: 2,
 				consistent: true,
 			},
 			ImportDeclaration: {
 				multiline: true,
-				minProperties: 1,
+				minProperties: 2,
 				consistent: true,
 			},
 			ObjectExpression: {

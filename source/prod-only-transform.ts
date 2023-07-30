@@ -1,7 +1,7 @@
-import ConditionalTransform from './conditional-transform';
+import { ConditionalTransform } from './conditional-transform';
 
 function ProdOnlyTransform(isProduction: boolean) {
 	return ConditionalTransform('$prodOnly', isProduction);
 }
 
-export default ProdOnlyTransform;
+export { ProdOnlyTransform };

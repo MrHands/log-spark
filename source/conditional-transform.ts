@@ -17,7 +17,7 @@ function ConditionalTransform(name: string, enabled: boolean) {
 
 					if (ts.isBlock(fn.body)) {
 						return factory.createImmediatelyInvokedArrowFunction(
-							fn.body.statements,
+							fn.body.statements
 						);
 					}
 
@@ -32,4 +32,4 @@ function ConditionalTransform(name: string, enabled: boolean) {
 	};
 }
 
-export default ConditionalTransform;
+export { ConditionalTransform };
