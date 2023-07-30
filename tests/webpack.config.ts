@@ -18,13 +18,13 @@ export default (env: NodeJS.ProcessEnv) => {
 	const isDevelopment = !isProduction;
 
 	const compilerOptions = Object.assign(tsconfig.compilerOptions, {
-		// outDir: path.resolve(targetPath, 'js'),
 		outDir: targetPath,
+		declaration: false,
 	});
 
 	return {
 		entry: {
-			'log-info': 'log-info/log-info.test.ts',
+			'log-info': path.resolve(__dirname, 'log-info/log-info.test.ts'),
 		},
 
 		module: {
@@ -38,7 +38,6 @@ export default (env: NodeJS.ProcessEnv) => {
 							loader: require.resolve('ts-loader'),
 							options: {
 								compilerOptions,
-								// happyPackMode: true,
 								getCustomTransformers: () => ({
 									before: [
 										DevOnlyTransform(isDevelopment),

@@ -1,1 +1,1 @@
-const output = `${$logInfo('Blah', 'stuff')}`;
+export const output = `${$logInfo('Blah', 'stuff')}`;
