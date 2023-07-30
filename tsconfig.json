@@ -4,18 +4,17 @@
 		"outDir": "./build",
 		"rootDir": "./source",
 
-		"declaration": true,
-		"esModuleInterop": true,
 		"target": "ESNext",
 		"module": "ESNext",
-		"baseUrl": ".",
 		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"declaration": true,
 		"resolveJsonModule": true,
 
+		"strict": true,
 		"allowJs": false,
 		"checkJs": false,
 		"allowUnreachableCode": false,
-		"strict": true,
 		"strictNullChecks": true,
 		"exactOptionalPropertyTypes": true,
 		"strictPropertyInitialization": true,
@@ -23,6 +22,7 @@
 		"skipLibCheck": true
 	},
 	"exclude": [
+		"./build",
 		"./node_modules"
 	]
 }
