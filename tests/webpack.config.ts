@@ -5,7 +5,7 @@ import {
 	LoggingTransform,
 	ProdOnlyTransform,
 } from '../source';
-import tsconfig from '../tsconfig.json';
+import tsconfig from './tsconfig.json';
 
 export default (env: NodeJS.ProcessEnv) => {
 	const targetPath = path.resolve(__dirname, '../build/tests');

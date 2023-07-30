@@ -1,16 +1,6 @@
 import { expect } from 'chai';
 
-function CaptureMacro(run: () => void) {
-	let result = '';
-	const original = console.log;
-	console.log = (value: string) => result += value;
-
-	run();
-
-	console.log = original;
-
-	return result;
-}
+import { CaptureConsoleLog } from '../helpers';
 
 let result = '';
 const original = console.log;
@@ -23,4 +13,4 @@ output();
 console.log = original;
 
 expect(result).to.be.equal('(Blah) stuff');
-// expect(CaptureMacro(() => $logInfo('Blah', 'stuff'))).to.be.equal('(Blah) stuff');
+expect(CaptureConsoleLog(() => $logInfo('Blah', 'stuff'))).to.be.equal('(Blah) stuff');
