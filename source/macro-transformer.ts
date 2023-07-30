@@ -1,13 +1,38 @@
 import ts from 'typescript';
 
-import { LoggingVisitor } from './logging-transform';
+import {
+	$logError,
+	$logFatal,
+	$logInfo,
+	$logTrace,
+	$logWarn,
+} from './logging-transform';
 import { type MacroFunction } from './types';
 
 class MacroTransformer {
 	private _context: ts.TransformationContext;
 	private _tsInstance: typeof ts;
 	private _macros: Record<string, MacroFunction> = {
-		$logInfo: LoggingVisitor,
+		$logTrace: (
+			func: ts.CallExpression,
+			context: ts.TransformationContext
+		) => $logTrace(context.factory, func),
+		$logInfo: (
+			func: ts.CallExpression,
+			context: ts.TransformationContext
+		) => $logInfo(context.factory, func),
+		$logWarn: (
+			func: ts.CallExpression,
+			context: ts.TransformationContext
+		) => $logWarn(context.factory, func),
+		$logError: (
+			func: ts.CallExpression,
+			context: ts.TransformationContext
+		) => $logError(context.factory, func),
+		$logFatal: (
+			func: ts.CallExpression,
+			context: ts.TransformationContext
+		) => $logFatal(context.factory, func),
 	};
 	private _visitor = (node: ts.Node): ts.VisitResult<ts.Node|undefined> => {
 		if (node.pos >= 0 && this._tsInstance.isCallExpression(node)) {
