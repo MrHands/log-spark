@@ -2,7 +2,7 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "./build",
-		"rootDir": "./source",
+		"rootDir": "./",
 
 		"target": "ESNext",
 		"module": "ESNext",
@@ -28,6 +28,7 @@
 	"include": [
 		"**/.eslintrc.js",
 		"source/",
+		"tests/",
 		"types/"
 	],
 	"exclude": [
