@@ -1,15 +1,12 @@
 {
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"outDir": "./build",
-		"rootDir": "./source",
+		"outDir": "../build/tests",
+		"rootDir": "../",
 
 		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "node",
+		"module": "CommonJS",
 		"esModuleInterop": true,
-		"declaration": true,
-		"resolveJsonModule": true,
 
 		"strict": true,
 		"allowJs": false,
@@ -23,16 +20,13 @@
 	},
 	"typeRoots": [
 		"node_modules/@types",
-		"types"
-	],
-	"include": [
-		"**/.eslintrc.js",
-		"source/",
-		"types/"
+		"../types"
 	],
 	"exclude": [
-		"./build",
-		"./node_modules"
+		"webpack.config.ts"
+	],
+	"plugins": [
+		{ "transform": "../build" }
 	],
 	"ts-node": {
 		"compilerOptions": {
