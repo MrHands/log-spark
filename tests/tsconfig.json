@@ -18,10 +18,10 @@
 		"noUncheckedIndexedAccess": false,
 		"skipLibCheck": true
 	},
-	"typeRoots": [
+	/* "typeRoots": [
 		"node_modules/@types",
 		"../types"
-	],
+	], */
 	"exclude": [
 		"webpack.config.ts"
 	],

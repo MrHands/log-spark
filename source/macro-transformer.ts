@@ -6,14 +6,17 @@ type MacroFunction = (context: ts.TransformationContext, callSite: ts.Node) => t
 
 class MacroTransformer {
 	private _context: ts.TransformationContext;
-	private _checker: ts.TypeChecker;
+	private _tsInstance: typeof ts;
 	private _macros: Record<string, MacroFunction> = {
 		$logInfo: LoggingVisitor,
 	};
 
-	constructor(context: ts.TransformationContext, checker: ts.TypeChecker) {
+	constructor(
+		context: ts.TransformationContext,
+		tsInstance: typeof ts
+	) {
 		this._context = context;
-		this._checker = checker;
+		this._tsInstance = tsInstance;
 	}
 
 	run(node: ts.SourceFile): ts.Node {

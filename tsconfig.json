@@ -4,8 +4,8 @@
 		"outDir": "./build",
 		"rootDir": "./source",
 
-		"target": "ESNext",
-		"module": "ESNext",
+		"target": "ES6",
+		"module": "CommonJS",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"declaration": true,

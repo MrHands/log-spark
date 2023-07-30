@@ -1,3 +1,7 @@
+import {
+	type PluginConfig,
+	type TransformerExtras,
+} from 'ts-patch';
 import ts from 'typescript';
 
 import { MacroTransformer } from './macro-transformer';
@@ -9,8 +13,11 @@ export * from './prod-only-transform';
 
 export declare function $logInfo(domain: object | string, message: string): void;
 
-export default (program: ts.Program): ts.TransformerFactory<ts.Node> => (ctx) => {
-	const typeChecker = program.getTypeChecker();
-	const transformer = new MacroTransformer(ctx, typeChecker);
-	return (firstNode) => transformer.run(firstNode as ts.SourceFile);
+export default (
+	_program: ts.Program,
+	_pluginConfig: PluginConfig,
+	{ ts: tsInstance }: TransformerExtras
+) => (ctx: ts.TransformationContext) => {
+	const transformer = new MacroTransformer(ctx, tsInstance);
+	return (sourceFile: ts.SourceFile) => transformer.run(sourceFile);
 };
