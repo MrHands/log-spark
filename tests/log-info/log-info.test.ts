@@ -13,6 +13,10 @@ describe('$logInfo', () => {
 		expect(CaptureConsoleLog(() => $logInfo('Shopping', `Milk: 0, Cheese: ${cheeseLeft}`))).to.be.equal('(Shopping) Milk: 0, Cheese: 200');
 	});
 
+	it('domain can be an object', () => {
+		expect(CaptureConsoleLog(() => $logInfo(new Error(), 'Look at the time!'))).to.be.equal('(Error) Look at the time!');
+	});
+
 	it('domain can be a class instance', () => {
 		class Mouse {
 			_health = 3;
