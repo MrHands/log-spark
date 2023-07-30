@@ -1,8 +1,7 @@
 import ts from 'typescript';
 
 import { LoggingVisitor } from './logging-transform';
-
-type MacroFunction = (context: ts.TransformationContext, callSite: ts.Node) => ts.Node;
+import { type MacroFunction } from './types';
 
 class MacroTransformer {
 	private _context: ts.TransformationContext;
@@ -10,13 +9,13 @@ class MacroTransformer {
 	private _macros: Record<string, MacroFunction> = {
 		$logInfo: LoggingVisitor,
 	};
-	private _visitor = (node: ts.Node): ts.Node => {
-		if (this._tsInstance.isCallExpression(node)) {
+	private _visitor = (node: ts.Node): ts.VisitResult<ts.Node|undefined> => {
+		if (node.pos >= 0 && this._tsInstance.isCallExpression(node)) {
 			const func: ts.CallExpression = node;
 
 			const macro = this._macros[func.expression.getText()];
 			if (typeof macro !== 'undefined') {
-				return macro(this._context, node);
+				return macro(func, this._context);
 			}
 		}
 
@@ -46,27 +45,7 @@ class MacroTransformer {
 			}
 		}
 
-		return ts.factory.updateSourceFile(node, statements);
-	}
-
-	visit(source: ts.Node): ts.VisitResult<ts.Node|undefined> {
-		const visitor = (node: ts.Node): ts.Node => {
-			if (node.pos >= 0
-				&& ts.isCallExpression(node)) {
-				const func = node;
-
-				const macro = this._macros[func.expression.getText()];
-				if (typeof macro === 'undefined') {
-					return node;
-				}
-
-				return macro(this._context, node);
-			}
-
-			return ts.visitEachChild(node, visitor, this._context);
-		};
-
-		return ts.visitNode(source, visitor);
+		return this._tsInstance.factory.updateSourceFile(node, statements);
 	}
 }
 

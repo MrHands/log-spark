@@ -1,6 +1,8 @@
 import ts from 'typescript';
 
-function CreateLogging(levelPrefix: string, consoleMethod: string) {
+import { MacroFunction } from './types';
+
+function CreateLoggingTransform(levelPrefix: string, consoleMethod: string) {
 	return (factory: ts.NodeFactory, func: ts.CallExpression) => {
 		if (func.arguments.length < 2) {
 			const source = func.getSourceFile();
@@ -72,28 +74,23 @@ const Logging: Record<
 	string,
 	(factory: ts.NodeFactory, func: ts.CallExpression) => ts.CallExpression
 > = {
-	$logTrace: CreateLogging('[TRACE] ', 'log'),
-	$logInfo: CreateLogging('', 'log'),
-	$logWarn: CreateLogging('', 'warn'),
-	$logError: CreateLogging('', 'error'),
-	$logFatal: CreateLogging('[FATAL] ', 'error'),
+	$logTrace: CreateLoggingTransform('[TRACE] ', 'log'),
+	$logInfo: CreateLoggingTransform('', 'log'),
+	$logWarn: CreateLoggingTransform('', 'warn'),
+	$logError: CreateLoggingTransform('', 'error'),
+	$logFatal: CreateLoggingTransform('[FATAL] ', 'error'),
 };
 
-const LoggingVisitor = (context: ts.TransformationContext, callSite: ts.Node) => {
-	const visitor = (node: ts.Node): ts.Node => {
-		if (ts.isCallExpression(node)) {
-			const func = node;
+const LoggingVisitor: MacroFunction = (
+	func: ts.CallExpression,
+	context: ts.TransformationContext
+) => {
+	const resolve = Logging[func.expression.getText()];
+	if (typeof resolve !== 'undefined') {
+		return resolve(context.factory, func);
+	}
 
-			const resolve = Logging[func.expression.getText()];
-			if (typeof resolve !== 'undefined') {
-				return resolve(ts.factory, func);
-			}
-		}
-
-		return ts.visitEachChild(node, visitor, context);
-	};
-
-	return ts.visitNode(callSite, visitor);
+	return undefined;
 };
 
 const LoggingTransform = (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
@@ -114,6 +111,7 @@ const LoggingTransform = (context: ts.TransformationContext) => (sourceFile: ts.
 };
 
 export {
+	CreateLoggingTransform,
 	LoggingTransform,
 	LoggingVisitor,
 };

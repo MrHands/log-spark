@@ -220,6 +220,17 @@ const importsRules = {
 	'simple-import-sort/exports': 'error',
 };
 
+const typescriptRules = {
+	// Disallow unused variables
+	'@typescript-eslint/no-unused-vars': [
+		'error',
+		{
+			argsIgnorePattern: '^_',
+		},
+	],
+	'no-unused-vars': 'off',
+};
+
 module.exports = {
 	extends: [
 		'airbnb-base',
@@ -245,5 +256,6 @@ module.exports = {
 	rules: {
 		...preferenceRules,
 		...importsRules,
+		...typescriptRules,
 	},
 };
