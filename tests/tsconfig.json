@@ -2,7 +2,7 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "../build/tests",
-		"rootDir": "../",
+		"rootDir": "./",
 
 		"target": "ESNext",
 		"module": "CommonJS",
@@ -18,10 +18,10 @@
 		"noUncheckedIndexedAccess": false,
 		"skipLibCheck": true
 	},
-	/* "typeRoots": [
+	"typeRoots": [
 		"node_modules/@types",
-		"../types"
-	], */
+		"../build"
+	],
 	"exclude": [
 		"webpack.config.ts"
 	],
