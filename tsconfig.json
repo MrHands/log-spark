@@ -21,9 +21,14 @@
 		"noUncheckedIndexedAccess": false,
 		"skipLibCheck": true
 	},
+	"typeRoots": [
+		"node_modules/@types",
+		"types"
+	],
 	"include": [
 		"**/.eslintrc.js",
-		"source/"
+		"source/",
+		"types/"
 	],
 	"exclude": [
 		"./build",
