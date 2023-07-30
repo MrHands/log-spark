@@ -19,12 +19,13 @@
 		"exactOptionalPropertyTypes": true,
 		"strictPropertyInitialization": true,
 		"noUncheckedIndexedAccess": false,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+
+		"typeRoots": [
+			"node_modules/@types",
+			"types"
+		]
 	},
-	"typeRoots": [
-		"node_modules/@types",
-		"types"
-	],
 	"include": [
 		".eslintrc.js",
 		"source/",

@@ -30,15 +30,18 @@
 				"transform": "../build"
 			}
 		],
+
 		"typeRoots": [
 			"../types"
 		]
 	},
 	"include": [
+		"../types",
 		"**/*.ts",
 		".eslintrc.js"
 	],
 	"exclude": [
+		"node_modules",
 		"webpack.config.ts"
 	],
 	"ts-node": {
