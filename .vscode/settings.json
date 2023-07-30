@@ -7,5 +7,9 @@
 	],
 	"eslint.validate": [
 		"typescript"
+	],
+	"eslint.workingDirectories": [
+		"./tests",
+		"./",
 	]
 }

@@ -229,6 +229,7 @@ module.exports = {
 	],
 	ignorePatterns: [
 		'build/**',
+		'tests/**',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -245,5 +246,4 @@ module.exports = {
 		...preferenceRules,
 		...importsRules,
 	},
-	root: true,
 };

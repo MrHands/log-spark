@@ -2,6 +2,8 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "../build/tests",
+		"rootDir": "./",
+
 		"moduleResolution": "NodeNext",
 
 		"target": "ESNext",
@@ -32,6 +34,10 @@
 			"../types"
 		]
 	},
+	"include": [
+		"**/*.ts",
+		".eslintrc.js"
+	],
 	"exclude": [
 		"webpack.config.ts"
 	],
