@@ -4,7 +4,7 @@ function CaptureConsoleLog(run: () => void) {
 	let result = '';
 	const original = console.log;
 	// eslint-disable-next-line no-return-assign
-	console.log = (value: string) => result += value;
+	console.log = (...value: string[]) => result += value.join(' ');
 
 	run();
 
@@ -17,7 +17,7 @@ function CaptureConsoleError(run: () => void) {
 	let result = '';
 	const original = console.error;
 	// eslint-disable-next-line no-return-assign
-	console.error = (value: string) => result += value;
+	console.error = (...value: string[]) => result += value.join(' ');
 
 	run();
 
