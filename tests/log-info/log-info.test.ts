@@ -4,6 +4,14 @@ declare global {
 	function $logInfo(domain: object | string, message: string): void;
 }
 
-const output = `${$logInfo('Blah', 'stuff')}`;
+let result = '';
+const original = console.log;
+console.log = (value: string) => result += value;
 
-expect(output).to.be.equal('console.log("(Blah) stuff")');
+const output = () => $logInfo('Blah', 'stuff');
+
+output();
+
+console.log = original;
+
+expect(result).to.be.equal('(Blah) stuff');
