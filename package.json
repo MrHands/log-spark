@@ -1,0 +1,17 @@
+{
+  "name": "log-spark",
+  "version": "1.0.0",
+  "description": "Typescript transformer functions for logging",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "logging",
+    "transformer",
+    "ast"
+  ],
+  "author": "Mr. Hands <mrhands31@gmail.com>",
+  "license": "ISC"
+}
