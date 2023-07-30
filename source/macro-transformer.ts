@@ -36,18 +36,23 @@ class MacroTransformer {
 	}
 
 	visit(node: ts.Node): ts.VisitResult<ts.Node|undefined> {
-		if (!ts.isFunctionDeclaration(node)
-		|| !node.name
-		|| !node.name.getText().startsWith('$')) {
-			return node;
-		}
+		const visitor = (node: ts.Node): ts.Node => {
+			if (node.pos >= 0
+				&& ts.isCallExpression(node)) {
+				const func = node;
+	
+				const macro = this._macros[func.expression.getText()];
+				if (typeof macro === 'undefined') {
+					return node;
+				}
 
-		const macro = this._macros[node.name.getText()];
-		if (typeof macro === 'undefined') {
-			return node;
-		}
-
-		return macro(this._context, node);
+				return macro(this._context, node);
+			}
+	
+			return ts.visitEachChild(node, visitor, this._context);
+		};
+	
+		return ts.visitNode(node, visitor);
 	}
 }
 

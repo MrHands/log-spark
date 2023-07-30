@@ -2,6 +2,7 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "../build/tests",
+		"moduleResolution": "NodeNext",
 
 		"target": "ESNext",
 		"module": "CommonJS",
@@ -20,12 +21,21 @@
 		"strictPropertyInitialization": true,
 		"noUncheckedIndexedAccess": false,
 		"removeComments": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+
+		"plugins": [
+			{
+				"transform": "../build"
+			}
+		],
+		"typeRoots": [
+			"../types"
+		]
 	},
 	"exclude": [
 		"webpack.config.ts"
 	],
-	"plugins": [
-		{ "transform": "../build" }
-	]
+	"ts-node": {
+		"compiler": "ts-patch/compiler"
+	}
 }

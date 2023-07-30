@@ -81,7 +81,7 @@ const Logging: Record<
 
 const LoggingVisitor = (context: ts.TransformationContext, callSite: ts.Node) => {
 	const visitor = (node: ts.Node): ts.Node => {
-		if (ts.isCallExpression(node) && node.pos >= 0) {
+		if (ts.isCallExpression(node)) {
 			const func = node;
 
 			const resolve = Logging[func.expression.getText()];

@@ -1,5 +1,8 @@
-import { $logInfo } from '../../build';
 import { expect } from 'chai';
+
+declare global {
+	function $logInfo(domain: object | string, message: string): void;
+}
 
 const output = `${$logInfo('Blah', 'stuff')}`;
 
