@@ -79,7 +79,24 @@ const Logging: Record<
 	$logFatal: CreateLogging('[FATAL] ', 'error'),
 };
 
-const LoggingTransform = (context: ts.TransformationContext) => 	(sourceFile: ts.SourceFile) => {
+const LoggingVisitor = (context: ts.TransformationContext, callSite: ts.Node) => {
+	const visitor = (node: ts.Node): ts.Node => {
+		if (ts.isCallExpression(node) && node.pos >= 0) {
+			const func = node;
+
+			const resolve = Logging[func.expression.getText()];
+			if (typeof resolve !== 'undefined') {
+				return resolve(ts.factory, func);
+			}
+		}
+
+		return ts.visitEachChild(node, visitor, context);
+	};
+
+	return ts.visitNode(callSite, visitor);
+};
+
+const LoggingTransform = (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
 	const visitor = (node: ts.Node): ts.Node => {
 		if (ts.isCallExpression(node) && node.pos >= 0) {
 			const func = node;
@@ -96,4 +113,7 @@ const LoggingTransform = (context: ts.TransformationContext) => 	(sourceFile: ts
 	return ts.visitNode(sourceFile, visitor);
 };
 
-export { LoggingTransform };
+export {
+	LoggingTransform,
+	LoggingVisitor,
+};
