@@ -12,14 +12,12 @@ class MacroTransformer {
 	};
 	private _visitor = (node: ts.Node): ts.Node => {
 		if (this._tsInstance.isCallExpression(node)) {
-			const func = node;
+			const func: ts.CallExpression = node;
 
 			const macro = this._macros[func.expression.getText()];
-			if (typeof macro === 'undefined') {
-				return node;
+			if (typeof macro !== 'undefined') {
+				return macro(this._context, node);
 			}
-
-			return macro(this._context, node);
 		}
 
 		return this._tsInstance.visitEachChild(node, this._visitor, this._context);
