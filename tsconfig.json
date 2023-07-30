@@ -1,0 +1,29 @@
+{
+	"$schema": "http://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"outDir": "./build",
+		"rootDir": "./source",
+
+		"declaration": false,
+		"emitDeclarationOnly": false,
+		"esModuleInterop": true,
+		"target": "ESNext",
+		"module": "ESNext",
+		"baseUrl": ".",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+
+		"allowJs": false,
+		"checkJs": false,
+		"allowUnreachableCode": false,
+		"strict": true,
+		"strictNullChecks": true,
+		"exactOptionalPropertyTypes": true,
+		"strictPropertyInitialization": true,
+		"noUncheckedIndexedAccess": false,
+		"skipLibCheck": true
+	},
+	"exclude": [
+		"./node_modules"
+	]
+}
