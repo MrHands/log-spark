@@ -23,9 +23,13 @@ export default (env: NodeJS.ProcessEnv) => {
 	});
 
 	return {
+		devtool: isProduction ? false : 'source-map',
+
 		entry: {
 			'log-info': path.resolve(__dirname, 'log-info/log-info.test.ts'),
 		},
+
+		mode: nodeEnv,
 
 		module: {
 			rules: [

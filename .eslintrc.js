@@ -227,6 +227,9 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/typescript',
 	],
+	ignorePatterns: [
+		'build/**',
+	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 12,
