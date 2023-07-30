@@ -10,6 +10,20 @@ class MacroTransformer {
 	private _macros: Record<string, MacroFunction> = {
 		$logInfo: LoggingVisitor,
 	};
+	private _visitor = (node: ts.Node): ts.Node => {
+		if (this._tsInstance.isCallExpression(node)) {
+			const func = node;
+
+			const macro = this._macros[func.expression.getText()];
+			if (typeof macro === 'undefined') {
+				return node;
+			}
+
+			return macro(this._context, node);
+		}
+
+		return this._tsInstance.visitEachChild(node, this._visitor, this._context);
+	};
 
 	constructor(
 		context: ts.TransformationContext,
@@ -26,7 +40,9 @@ class MacroTransformer {
 
 		const statements: Array<ts.Statement> = [];
 		for (const s of node.statements) {
-			const result = this.visit(s) as Array<ts.Statement> | ts.Statement | undefined;
+			const result = this._tsInstance.visitNode(s, this._visitor) as
+				Array<ts.Statement> | ts.Statement | undefined;
+
 			if (result) {
 				statements.push(...(Array.isArray(result) ? result : [result]));
 			}
