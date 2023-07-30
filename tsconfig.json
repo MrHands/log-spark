@@ -21,6 +21,10 @@
 		"noUncheckedIndexedAccess": false,
 		"skipLibCheck": true
 	},
+	"include": [
+		"**/.eslintrc.js",
+		"source/"
+	],
 	"exclude": [
 		"./build",
 		"./node_modules"
