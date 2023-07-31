@@ -8,5 +8,10 @@
 				"isProduction": true
 			}
 		]
-	}
+	},
+	"include": [
+		"../../types",
+		"**/*.ts",
+		"**/.eslintrc.js"
+	]
 }

@@ -8,5 +8,10 @@
 				"logSeverityMinimum": -1
 			}
 		]
-	}
+	},
+	"include": [
+		"../../types",
+		"**/*.ts",
+		"**/.eslintrc.js"
+	]
 }

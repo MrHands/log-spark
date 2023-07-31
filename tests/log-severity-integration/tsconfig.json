@@ -9,5 +9,10 @@
 				"logSeverityMaximum": 3
 			}
 		]
-	}
+	},
+	"include": [
+		"../../types",
+		"**/*.ts",
+		"**/.eslintrc.js"
+	]
 }
