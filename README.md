@@ -94,7 +94,7 @@ The object in the `plugins` array takes these additional properties:
 | Property              | Type    | Default            | Description                                                                                                                           |
 |-----------------------|---------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | logSeverityMinimum    | number  | ELogSeverity.Trace | Minimum log severity that will be translated to log statements.                                                                       |
-| logSeverityMaximum    | number  | ELogSeverity.Fatal | Maximum log severity that will be translated to log statements. Setting this to ELogSeverity.Maximum will disable all logging macros. |
+| logSeverityMaximum    | number  | ELogSeverity.Fatal | Maximum log severity that will be translated to log statements. Setting this to `ELogSeverity.Disabled` will disable all logging macros. |
 | throwExceptionMinimum | number  | ELogSeverity.Fatal | Minimum log severity that throws an exception.                                                                                        |
-| throwExceptionMaximum | number  | ELogSeverity.Fatal | Maximum log severity that throws an exception. Setting this to ELogSeverity.Maximum will disable logging macros throwing exceptions.  |
+| throwExceptionMaximum | number  | ELogSeverity.Fatal | Maximum log severity that throws an exception. Setting this to `ELogSeverity.Disabled` will disable logging macros throwing exceptions.  |
 | isProduction          | boolean | false              | Compiling for production (true) or development (false).                                                                               |
