@@ -6,6 +6,10 @@ module.exports = {
 	rules: {
 		'import/no-extraneous-dependencies': 'off',
 		'@typescript-eslint/no-var-requires': 'off',
+
+		// mocha requires anonymous functions
+		'func-names': 'off',
+		'prefer-arrow-callback': 'off',
 	},
 	ignorePatterns: [
 		'**/webpack.config.ts',
