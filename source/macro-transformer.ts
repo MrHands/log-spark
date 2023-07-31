@@ -1,6 +1,10 @@
 import type ts from 'typescript';
 
 import {
+	$devOnly,
+	$prodOnly,
+} from './conditional-transform';
+import {
 	LogSparkConfig,
 	type LogSparkPluginConfig,
 } from './config';
@@ -19,31 +23,13 @@ class MacroTransformer {
 	private readonly _config = new LogSparkConfig();
 	private readonly _tsInstance: typeof ts;
 	private readonly _macros: Record<string, TMacroFunction> = {
-		$logTrace: (
-			func: ts.CallExpression,
-			context: ts.TransformationContext,
-			config: LogSparkConfig
-		) => $logTrace(context.factory, func, config),
-		$logInfo: (
-			func: ts.CallExpression,
-			context: ts.TransformationContext,
-			config: LogSparkConfig
-		) => $logInfo(context.factory, func, config),
-		$logWarn: (
-			func: ts.CallExpression,
-			context: ts.TransformationContext,
-			config: LogSparkConfig
-		) => $logWarn(context.factory, func, config),
-		$logError: (
-			func: ts.CallExpression,
-			context: ts.TransformationContext,
-			config: LogSparkConfig
-		) => $logError(context.factory, func, config),
-		$logFatal: (
-			func: ts.CallExpression,
-			context: ts.TransformationContext,
-			config: LogSparkConfig
-		) => $logFatal(context.factory, func, config),
+		$logTrace,
+		$logInfo,
+		$logWarn,
+		$logError,
+		$logFatal,
+		$devOnly,
+		$prodOnly,
 	};
 
 	constructor(

@@ -2,13 +2,14 @@ import ts from 'typescript';
 
 import { type LogSparkConfig } from './config';
 import { ELogSeverity } from './log-severity';
+import { type TMacroFunction } from './types';
 
 function CreateLoggingTransform(
 	severity: ELogSeverity,
 	levelPrefix: string,
 	consoleMethod: string
-) {
-	return (factory: ts.NodeFactory, func: ts.CallExpression, config: LogSparkConfig) => {
+): TMacroFunction {
+	return (func: ts.CallExpression, context: ts.TransformationContext, config: LogSparkConfig) => {
 		if (func.arguments.length < 2) {
 			const source = func.getSourceFile();
 			throw new Error(
@@ -17,6 +18,8 @@ function CreateLoggingTransform(
 				}) Not enough arguments for "${func.expression.getText()}" macro!`
 			);
 		}
+
+		const { factory } = context;
 
 		if (severity < config.logSeverityMinimum
 			|| severity > config.logSeverityMaximum) {

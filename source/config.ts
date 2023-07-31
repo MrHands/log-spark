@@ -76,6 +76,11 @@ class LogSparkPluginConfig implements PluginConfig {
 	 * Maximum log severity that throw an exception.
 	 */
 	throwExceptionMaximum?: ELogSeverity;
+
+	/**
+	 * Compiling for production (true) or development (false).
+	 */
+	isProduction?: boolean;
 }
 
 class LogSparkConfig {
@@ -83,6 +88,7 @@ class LogSparkConfig {
 	logSeverityMaximum: ELogSeverity = ELogSeverity.Fatal;
 	throwExceptionMinimum: ELogSeverity = ELogSeverity.Fatal;
 	throwExceptionMaximum: ELogSeverity = ELogSeverity.Fatal;
+	isProduction = false;
 }
 
 export {
