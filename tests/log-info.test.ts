@@ -5,16 +5,22 @@ import { CaptureConsoleLog } from './helpers';
 
 describe('$logInfo', function () {
 	it('prints to console.log', function () {
-		expect(CaptureConsoleLog(() => $logInfo('GroceryList', 'Cheese'))).to.be.equal('(GroceryList) Cheese');
+		expect(CaptureConsoleLog(function () {
+			$logInfo('GroceryList', 'Cheese');
+		})).to.be.equal('(GroceryList) Cheese');
 	});
 
 	it('handles variables', function () {
 		const cheeseLeft = 200;
-		expect(CaptureConsoleLog(() => $logInfo('Shopping', `Milk: 0, Cheese: ${cheeseLeft}`))).to.be.equal('(Shopping) Milk: 0, Cheese: 200');
+		expect(CaptureConsoleLog(function () {
+			$logInfo('Shopping', `Milk: 0, Cheese: ${cheeseLeft}`);
+		})).to.be.equal('(Shopping) Milk: 0, Cheese: 200');
 	});
 
 	it('domain can be an object', function () {
-		expect(CaptureConsoleLog(() => $logInfo(new Error(), 'Look at the time!'))).to.be.equal('(Error) Look at the time!');
+		expect(CaptureConsoleLog(function () {
+			$logInfo(new Error(), 'Look at the time!');
+		})).to.be.equal('(Error) Look at the time!');
 	});
 
 	it('domain can be a class instance', function () {
