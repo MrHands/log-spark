@@ -1,0 +1,13 @@
+{
+	"$schema": "http://json.schemastore.org/tsconfig",
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./"
+	},
+	"include": [
+		"source/",
+		"types/",
+		"**/.eslintrc.js",
+		"jest.config.ts"
+	]
+}

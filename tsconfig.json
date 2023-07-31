@@ -27,13 +27,10 @@
 		]
 	},
 	"include": [
-		".eslintrc.js",
-		"jest.config.ts",
 		"source/",
 		"types/"
 	],
 	"exclude": [
-		"jest.config.ts",
 		"./build",
 		"./node_modules"
 	],

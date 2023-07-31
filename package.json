@@ -10,7 +10,7 @@
     "build": "tsc",
     "prepare": "ts-patch install",
     "test": "tsc && cd ./tests/integration && tsc && cd ../ && tsc && jest",
-    "integration": "tsc && cd ./tests/integration && tsc"
+    "lint": "eslint --fix"
   },
   "keywords": [
     "typescript",

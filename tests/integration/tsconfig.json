@@ -10,6 +10,11 @@
 			}
 		]
 	},
+	"include": [
+		"../../types",
+		"**/*.ts",
+		".eslintrc.js"
+	],
 	"exclude": [
 		"node_modules"
 	]
