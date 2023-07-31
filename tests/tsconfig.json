@@ -25,11 +25,11 @@
 		],
 
 		"typeRoots": [
-			"../types"
+			"../dist"
 		]
 	},
 	"include": [
-		"../types",
+		"../dist/*.d.ts",
 		"**/*.ts",
 		".eslintrc.js"
 	],

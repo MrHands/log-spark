@@ -11,7 +11,7 @@
 		]
 	},
 	"include": [
-		"../../types",
+		"../../dist",
 		"**/*.ts",
 		"**/.eslintrc.js"
 	]
