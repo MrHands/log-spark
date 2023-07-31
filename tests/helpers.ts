@@ -1,30 +1,16 @@
-/* eslint-disable no-console */
+type TConsoleMethod = (...value: string[]) => void;
 
-function CaptureConsoleLog(run: () => void) {
+function CaptureConsoleOutput(name: string, run: () => void) {
 	let result = '';
 
-	const original = console.log;
+	const dict = console as unknown as Record<string, TConsoleMethod>;
+	const original = dict[name];
 	// eslint-disable-next-line no-return-assign
-	console.log = (...value: string[]) => result += value.join(' ');
+	dict[name] = (...value: string[]) => result += value.join(' ');
 	run();
-	console.log = original;
+	dict[name] = original;
 
 	return result;
 }
 
-function CaptureConsoleError(run: () => void) {
-	let result = '';
-
-	const original = console.error;
-	// eslint-disable-next-line no-return-assign
-	console.error = (...value: string[]) => result += value.join(' ');
-	run();
-	console.error = original;
-
-	return result;
-}
-
-export {
-	CaptureConsoleError,
-	CaptureConsoleLog,
-};
+export { CaptureConsoleOutput };

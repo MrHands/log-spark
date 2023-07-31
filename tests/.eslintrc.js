@@ -5,6 +5,8 @@ module.exports = {
 	extends: ['../.eslintrc.js'],
 	rules: {
 		'import/no-extraneous-dependencies': 'off',
+
+		'@typescript-eslint/no-magic-numbers': 'off',
 		'@typescript-eslint/no-var-requires': 'off',
 
 		// mocha requires anonymous functions

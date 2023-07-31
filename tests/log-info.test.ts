@@ -4,24 +4,24 @@ import {
 	test,
 } from '@jest/globals';
 
-import { CaptureConsoleLog } from '.';
+import { CaptureConsoleOutput } from '.';
 
 describe('$logInfo', function () {
 	test('prints to console.log', function () {
-		expect(CaptureConsoleLog(function () {
+		expect(CaptureConsoleOutput('log', function () {
 			$logInfo('GroceryList', 'Cheese');
 		})).toBe('(GroceryList) Cheese');
 	});
 
 	test('handles variables', function () {
 		const cheeseLeft = 200;
-		expect(CaptureConsoleLog(function () {
+		expect(CaptureConsoleOutput('log', function () {
 			$logInfo('Shopping', `Milk: 0, Cheese: ${cheeseLeft}`);
 		})).toBe('(Shopping) Milk: 0, Cheese: 200');
 	});
 
 	test('domain can be an object', function () {
-		expect(CaptureConsoleLog(function () {
+		expect(CaptureConsoleOutput('log', function () {
 			$logInfo(new Error(), 'Look at the time!');
 		})).toBe('(Error) Look at the time!');
 	});
@@ -40,6 +40,6 @@ describe('$logInfo', function () {
 		}
 		const mouse = new Mouse();
 
-		expect(CaptureConsoleLog(() => mouse.print())).toBe('([Mouse]) Health - 3');
+		expect(CaptureConsoleOutput('log', () => mouse.print())).toBe('([Mouse]) Health - 3');
 	});
 });

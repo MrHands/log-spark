@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
-    "test": "tsc && cd ./tests/integration && tsc && cd ../ && tsc && jest",
+    "test": "tsc && cd ./tests/integration && tsc && cd ../ && tsc && jest --verbose",
     "lint": "eslint --fix"
   },
   "keywords": [
