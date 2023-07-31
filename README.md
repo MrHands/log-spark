@@ -68,6 +68,33 @@ let moneyOwed = 100000;
 | Fatal    | 4            | `$logFatal()` | `throw new Error()` (default) or `console.error()` | Output is prefixed with "[FATAL]" to differentiate it from Error messages when not throwing an exception |
 | Maximum  | 5            | -             | -                                                  | Used to disable options from the configuration settings                                                  |
 
-Thanks to [TablesGenerator](https://www.tablesgenerator.com/markdown_tables) for an awesome tool to help create this table!
-
 # Configuration
+
+In order to build with `log-spark`, you must modify your `tsconfig.json`:
+
+```json
+{
+	"$schema": "http://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"plugins": [
+			{ "transform": "log-spark" }
+		],
+		"typeRoots": [
+			"log-spark/types"
+		]
+	},
+	"ts-node": {
+		"compiler": "ts-patch/compiler"
+	}
+}
+```
+
+The object in the `plugins` array takes these additional properties:
+
+| Property              | Type    | Default            | Description                                                                                                                           |
+|-----------------------|---------|--------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| logSeverityMinimum    | number  | ELogSeverity.Trace | Minimum log severity that will be translated to log statements.                                                                       |
+| logSeverityMaximum    | number  | ELogSeverity.Fatal | Maximum log severity that will be translated to log statements. Setting this to ELogSeverity.Maximum will disable all logging macros. |
+| throwExceptionMinimum | number  | ELogSeverity.Fatal | Minimum log severity that throws an exception.                                                                                        |
+| throwExceptionMaximum | number  | ELogSeverity.Fatal | Maximum log severity that throws an exception. Setting this to ELogSeverity.Maximum will disable logging macros throwing exceptions.  |
+| isProduction          | boolean | false              | Compiling for production (true) or development (false).                                                                               |
