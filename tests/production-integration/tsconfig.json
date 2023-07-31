@@ -4,7 +4,7 @@
 	"compilerOptions": {
 		"plugins": [
 			{
-				"transform": "../../build",
+				"transform": "../../dist",
 				"isProduction": true
 			}
 		]

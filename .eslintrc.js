@@ -779,6 +779,7 @@ module.exports = {
 	],
 	ignorePatterns: [
 		'build/**',
+		'dist/**',
 		'tests/**',
 	],
 	parser: '@typescript-eslint/parser',

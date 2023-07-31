@@ -21,7 +21,7 @@
 		"strictPropertyInitialization": true,
 
 		"plugins": [
-			{ "transform": "../build" }
+			{ "transform": "../dist" }
 		],
 
 		"typeRoots": [

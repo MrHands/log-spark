@@ -22,13 +22,13 @@ describe('disable all integration', function () {
 	test('warning is not output', function () {
 		expect(CaptureConsoleOutput('warn', function () {
 			$logWarn('Dog', 'Loves biscuits');
-		})).toBe('(Dog) Loves biscuits');
+		})).toBe('');
 	});
 
 	test('error is not output', function () {
 		expect(CaptureConsoleOutput('error', function () {
 			$logError('Coin', 'Heads');
-		})).toBe('(Coin) Heads');
+		})).toBe('');
 	});
 
 	test('fatal is not output', function () {

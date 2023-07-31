@@ -4,7 +4,7 @@
 	"compilerOptions": {
 		"plugins": [
 			{
-				"transform": "../../build",
+				"transform": "../../dist",
 				"logSeverityMinimum": 2,
 				"logSeverityMaximum": 3
 			}
