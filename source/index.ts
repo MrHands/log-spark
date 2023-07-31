@@ -1,9 +1,7 @@
-import {
-	type PluginConfig,
-	type TransformerExtras,
-} from 'ts-patch';
+import { type TransformerExtras } from 'ts-patch';
 import type ts from 'typescript';
 
+import { type Config } from './config';
 import { MacroTransformer } from './macro-transformer';
 
 export * from './conditional-transform';
@@ -13,9 +11,9 @@ export * from './prod-only-transform';
 
 export default (
 	_program: ts.Program,
-	_pluginConfig: PluginConfig,
+	config: Config,
 	{ ts: tsInstance }: TransformerExtras
 ) => (context: ts.TransformationContext) => {
-	const transformer = new MacroTransformer(context, tsInstance);
+	const transformer = new MacroTransformer(context, config, tsInstance);
 	return (sourceFile: ts.SourceFile) => transformer.run(sourceFile);
 };

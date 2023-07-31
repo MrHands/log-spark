@@ -1,5 +1,6 @@
 import type ts from 'typescript';
 
+import { type Config } from './config';
 import {
 	$logError,
 	$logFatal,
@@ -11,6 +12,7 @@ import { type TMacroFunction } from './types';
 
 class MacroTransformer {
 	private readonly _context: ts.TransformationContext;
+	private readonly _config: Config;
 	private readonly _tsInstance: typeof ts;
 	private readonly _macros: Record<string, TMacroFunction> = {
 		$logTrace: (
@@ -37,9 +39,11 @@ class MacroTransformer {
 
 	constructor(
 		context: ts.TransformationContext,
+		config: Config,
 		tsInstance: typeof ts
 	) {
 		this._context = context;
+		this._config = config;
 		this._tsInstance = tsInstance;
 	}
 
