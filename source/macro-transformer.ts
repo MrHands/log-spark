@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import type ts from 'typescript';
 
 import {
 	$logError,
@@ -7,12 +7,12 @@ import {
 	$logTrace,
 	$logWarn,
 } from './logging-transform';
-import { type MacroFunction } from './types';
+import { type TMacroFunction } from './types';
 
 class MacroTransformer {
-	private _context: ts.TransformationContext;
-	private _tsInstance: typeof ts;
-	private _macros: Record<string, MacroFunction> = {
+	private readonly _context: ts.TransformationContext;
+	private readonly _tsInstance: typeof ts;
+	private readonly _macros: Record<string, TMacroFunction> = {
 		$logTrace: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext
@@ -34,18 +34,6 @@ class MacroTransformer {
 			context: ts.TransformationContext
 		) => $logFatal(context.factory, func),
 	};
-	private _visitor = (node: ts.Node): ts.VisitResult<ts.Node|undefined> => {
-		if (node.pos >= 0 && this._tsInstance.isCallExpression(node)) {
-			const func: ts.CallExpression = node;
-
-			const macro = this._macros[func.expression.getText()];
-			if (typeof macro !== 'undefined') {
-				return macro(func, this._context);
-			}
-		}
-
-		return this._tsInstance.visitEachChild(node, this._visitor, this._context);
-	};
 
 	constructor(
 		context: ts.TransformationContext,
@@ -60,10 +48,10 @@ class MacroTransformer {
 			return node;
 		}
 
-		const statements: Array<ts.Statement> = [];
+		const statements: ts.Statement[] = [];
 		for (const s of node.statements) {
 			const result = this._tsInstance.visitNode(s, this._visitor) as
-				Array<ts.Statement> | ts.Statement | undefined;
+				ts.Statement | ts.Statement[] | undefined;
 
 			if (result) {
 				statements.push(...(Array.isArray(result) ? result : [result]));
@@ -72,6 +60,19 @@ class MacroTransformer {
 
 		return this._tsInstance.factory.updateSourceFile(node, statements);
 	}
+
+	private readonly _visitor = (node: ts.Node): ts.VisitResult<ts.Node|undefined> => {
+		if (node.pos >= 0 && this._tsInstance.isCallExpression(node)) {
+			const func: ts.CallExpression = node;
+
+			const macro = this._macros[func.expression.getText()];
+			if (typeof macro !== 'undefined') {
+				return macro(func, this._context);
+			}
+		}
+
+		return this._tsInstance.visitEachChild(node, this._visitor, this._context);
+	};
 }
 
 export { MacroTransformer };

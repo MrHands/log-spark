@@ -1,10 +1,10 @@
-import ts from 'typescript';
+import type ts from 'typescript';
 
-type MacroResult = ts.VisitResult<ts.Node | undefined>;
+type TMacroResult = ts.VisitResult<ts.Node | undefined>;
 
-type MacroFunction = (func: ts.CallExpression, context: ts.TransformationContext) => MacroResult;
+type TMacroFunction = (func: ts.CallExpression, context: ts.TransformationContext) => TMacroResult;
 
-export {
-	MacroFunction,
-	MacroResult,
+export type {
+	TMacroFunction,
+	TMacroResult,
 };
