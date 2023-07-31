@@ -23,19 +23,19 @@
     "typescript": "^5.x"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.5",
-    "@types/mocha": "^10.0.1",
+    "@types/chai": "^4.x",
+    "@types/mocha": "^10.x",
     "@typescript-eslint/eslint-plugin": "^6.x",
     "@typescript-eslint/parser": "^6.x",
-    "chai": "^4.3.7",
+    "chai": "^4.x",
     "eslint": "^8.x",
     "eslint-config-airbnb-base": "^15.x",
     "eslint-plugin-simple-import-sort": "^10.x",
-    "mocha": "^10.2.0",
-    "ts-loader": "^9.4.4",
-    "ts-node": "^10.9.1",
-    "ts-patch": "^3.0.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "mocha": "^10.x",
+    "ts-loader": "^9.x",
+    "ts-node": "^10.x",
+    "ts-patch": "^3.x",
+    "webpack": "^5.x",
+    "webpack-cli": "^5.x"
   }
 }
