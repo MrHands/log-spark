@@ -2,7 +2,7 @@ import { type PluginConfig } from 'ts-patch';
 
 import { ELogSeverity } from './log-severity';
 
-class Config implements PluginConfig {
+class LogSparkPluginConfig implements PluginConfig {
 	/**
 	 * Language Server TypeScript Plugin name
 	 */
@@ -56,14 +56,36 @@ class Config implements PluginConfig {
 	transformProgram?: boolean;
 
 	/**
-	 * Minimum log severity that will be translated to log statements.
+	 * Minimum log severity that will be translated to log statements. Setting this to
+	 * ELogSeverity.Maximum will disable all logging macros.
 	 */
-	logSeverityMinimum: ELogSeverity = ELogSeverity.Trace;
+	logSeverityMinimum?: ELogSeverity;
 
 	/**
 	 * Maximum log severity that will be translated to log statements.
 	 */
-	logSeverityMaximum: ELogSeverity = ELogSeverity.Fatal;
+	logSeverityMaximum?: ELogSeverity;
+
+	/**
+	 * Minimum log severity that throw an exception. Setting this to ELogSeverity.Maximum will
+	 * disable logging macros throwing exceptions.
+	 */
+	throwExceptionMinimum?: ELogSeverity;
+
+	/**
+	 * Maximum log severity that throw an exception.
+	 */
+	throwExceptionMaximum?: ELogSeverity;
 }
 
-export { Config };
+class LogSparkConfig {
+	logSeverityMinimum: ELogSeverity = ELogSeverity.Trace;
+	logSeverityMaximum: ELogSeverity = ELogSeverity.Fatal;
+	throwExceptionMinimum: ELogSeverity = ELogSeverity.Fatal;
+	throwExceptionMaximum: ELogSeverity = ELogSeverity.Fatal;
+}
+
+export {
+	LogSparkConfig,
+	LogSparkPluginConfig,
+};

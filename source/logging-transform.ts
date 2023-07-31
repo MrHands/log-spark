@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-import { type Config } from './config';
+import { type LogSparkConfig } from './config';
 import { ELogSeverity } from './log-severity';
 
 function CreateLoggingTransform(
@@ -8,7 +8,7 @@ function CreateLoggingTransform(
 	levelPrefix: string,
 	consoleMethod: string
 ) {
-	return (factory: ts.NodeFactory, func: ts.CallExpression, config: Config) => {
+	return (factory: ts.NodeFactory, func: ts.CallExpression, config: LogSparkConfig) => {
 		if (func.arguments.length < 2) {
 			const source = func.getSourceFile();
 			throw new Error(
@@ -26,29 +26,34 @@ function CreateLoggingTransform(
 		const domain = func.arguments[0];
 		const message = func.arguments[1];
 
-		const logArguments: ts.Expression[] = [];
-
 		let textMessage = '';
-		if (
-			!ts.isTemplateExpression(message)
+		if (!ts.isTemplateExpression(message)
 			&& !ts.isCallExpression(message)
 		) {
 			textMessage = ` ${(message as ts.StringLiteral).text}`;
 		}
+
+		const isException = (
+			severity >= config.throwExceptionMinimum
+			&& severity <= config.throwExceptionMaximum
+		);
+		const prefix = isException ? '' : levelPrefix;
+
+		const logArguments: ts.Expression[] = [];
 
 		if (ts.isStringLiteral(domain)) {
 			const textDomain = domain.text;
 
 			logArguments.push(
 				factory.createStringLiteral(
-					`${levelPrefix}(${textDomain})${textMessage}`
+					`${prefix}(${textDomain})${textMessage}`
 				)
 			);
 		} else {
 			logArguments.push(
 				factory.createBinaryExpression(
 					factory.createBinaryExpression(
-						factory.createStringLiteral(`${levelPrefix}(`),
+						factory.createStringLiteral(`${prefix}(`),
 						factory.createToken(ts.SyntaxKind.PlusToken),
 						factory.createCallExpression(
 							factory.createPropertyAccessExpression(
@@ -67,6 +72,16 @@ function CreateLoggingTransform(
 
 		if (textMessage === '') {
 			logArguments.push(message);
+		}
+
+		if (isException) {
+			return factory.createThrowStatement(
+				factory.createNewExpression(
+					factory.createIdentifier('Error'),
+					undefined,
+					logArguments
+				)
+			);
 		}
 
 		return factory.createCallExpression(

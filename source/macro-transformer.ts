@@ -1,6 +1,9 @@
 import type ts from 'typescript';
 
-import { type Config } from './config';
+import {
+	LogSparkConfig,
+	type LogSparkPluginConfig,
+} from './config';
 import {
 	$logError,
 	$logFatal,
@@ -12,44 +15,54 @@ import { type TMacroFunction } from './types';
 
 class MacroTransformer {
 	private readonly _context: ts.TransformationContext;
-	private readonly _config: Config;
+	private readonly _pluginConfig: LogSparkPluginConfig;
+	private readonly _config = new LogSparkConfig();
 	private readonly _tsInstance: typeof ts;
 	private readonly _macros: Record<string, TMacroFunction> = {
 		$logTrace: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext,
-			config: Config
+			config: LogSparkConfig
 		) => $logTrace(context.factory, func, config),
 		$logInfo: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext,
-			config: Config
+			config: LogSparkConfig
 		) => $logInfo(context.factory, func, config),
 		$logWarn: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext,
-			config: Config
+			config: LogSparkConfig
 		) => $logWarn(context.factory, func, config),
 		$logError: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext,
-			config: Config
+			config: LogSparkConfig
 		) => $logError(context.factory, func, config),
 		$logFatal: (
 			func: ts.CallExpression,
 			context: ts.TransformationContext,
-			config: Config
+			config: LogSparkConfig
 		) => $logFatal(context.factory, func, config),
 	};
 
 	constructor(
 		context: ts.TransformationContext,
-		config: Config,
+		pluginConfig: LogSparkPluginConfig,
 		tsInstance: typeof ts
 	) {
 		this._context = context;
-		this._config = config;
+		this._pluginConfig = pluginConfig;
 		this._tsInstance = tsInstance;
+
+		this._config.logSeverityMinimum = pluginConfig.logSeverityMinimum
+			?? this._config.logSeverityMinimum;
+		this._config.logSeverityMaximum = pluginConfig.logSeverityMaximum
+			?? this._config.logSeverityMaximum;
+		this._config.throwExceptionMinimum = pluginConfig.throwExceptionMinimum
+			?? this._config.throwExceptionMinimum;
+		this._config.throwExceptionMaximum = pluginConfig.throwExceptionMaximum
+			?? this._config.throwExceptionMaximum;
 	}
 
 	run(node: ts.SourceFile): ts.Node {
