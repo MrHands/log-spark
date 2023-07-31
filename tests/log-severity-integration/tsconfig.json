@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json.schemastore.org/tsconfig",
-	"extends": "../tsconfig.json",
+	"extends": "../tsconfig.integration.json",
 	"compilerOptions": {
 		"plugins": [
 			{
@@ -9,13 +9,5 @@
 				"logSeverityMaximum": 3
 			}
 		]
-	},
-	"include": [
-		"../../types",
-		"**/*.ts",
-		".eslintrc.js"
-	],
-	"exclude": [
-		"node_modules"
-	]
+	}
 }
