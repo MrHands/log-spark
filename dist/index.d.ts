@@ -24,5 +24,14 @@
 import { type TransformerExtras } from 'ts-patch';
 import type ts from 'typescript';
 import { type LogSparkPluginConfig } from './config';
+declare global {
+    function $devOnly(what: () => void): void;
+    function $prodOnly(what: () => void): void;
+    function $logTrace(domain: object | string, message: string): void;
+    function $logInfo(domain: object | string, message: string): void;
+    function $logWarn(domain: object | string, message: string): void;
+    function $logError(domain: object | string, message: string): void;
+    function $logFatal(domain: object | string, message: string): void;
+}
 declare const _default: (_program: ts.Program, config: LogSparkPluginConfig, { ts: tsInstance }: TransformerExtras) => (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => ts.Node;
 export default _default;

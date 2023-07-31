@@ -1,11 +1,12 @@
 {
   "name": "log-spark",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Typescript transformer functions for logging",
   "files": [
-    "dist"
+    "dist/"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
@@ -20,6 +21,7 @@
   ],
   "author": "Mr. Hands <mrhands31@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/MrHands/log-spark",
   "dependencies": {
     "typescript": "^5.x"
   },
