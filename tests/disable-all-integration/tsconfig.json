@@ -5,7 +5,7 @@
 		"plugins": [
 			{
 				"transform": "../../build",
-				"logSeverityMinimum": -1
+				"logSeverityMaximum": -1
 			}
 		]
 	},

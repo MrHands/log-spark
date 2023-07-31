@@ -56,24 +56,24 @@ class LogSparkPluginConfig implements PluginConfig {
 	transformProgram?: boolean;
 
 	/**
-	 * Minimum log severity that will be translated to log statements. Setting this to
-	 * ELogSeverity.Maximum will disable all logging macros.
+	 * Minimum log severity that will be translated to log statements.
 	 */
 	logSeverityMinimum?: ELogSeverity;
 
 	/**
-	 * Maximum log severity that will be translated to log statements.
+	 * Maximum log severity that will be translated to log statements. Setting this to
+	 * ELogSeverity.Maximum will disable all logging macros.
 	 */
 	logSeverityMaximum?: ELogSeverity;
 
 	/**
-	 * Minimum log severity that throw an exception. Setting this to ELogSeverity.Maximum will
-	 * disable logging macros throwing exceptions.
+	 * Minimum log severity that throw an exception.
 	 */
 	throwExceptionMinimum?: ELogSeverity;
 
 	/**
-	 * Maximum log severity that throw an exception.
+	 * Maximum log severity that throw an exception. Setting this to ELogSeverity.Maximum will
+	 * disable logging macros throwing exceptions.
 	 */
 	throwExceptionMaximum?: ELogSeverity;
 
