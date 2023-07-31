@@ -7,7 +7,7 @@ import {
 describe('$logFatal', function () {
 	test('throws an exception', function () {
 		expect(() => {
-			$logFatal('Map', 'Not found');
-		}).toThrow(new Error('(Map) Not found'));
+			$logFatal('Map', 'City not found');
+		}).toThrow(new Error('(Map) City not found'));
 	});
 });

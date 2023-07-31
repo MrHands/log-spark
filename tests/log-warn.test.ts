@@ -22,8 +22,15 @@ describe('$logWarn', function () {
 
 	test('domain can be an object', function () {
 		expect(CaptureConsoleOutput('warn', function () {
-			$logWarn(new ArrayBuffer(12), 'Creating many buffers');
-		})).toBe('([object ArrayBuffer]) Creating many buffers');
+			const oven = {
+				degrees: 200,
+
+				toString() {
+					return 'BakingOven';
+				},
+			};
+			$logWarn(oven, `Set to ${oven.degrees} degrees Celcius`);
+		})).toBe('(BakingOven) Set to 200 degrees Celcius');
 	});
 
 	test('domain can be a class instance', function () {
