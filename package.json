@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
-    "test": "tsc && cd ./tests && tsc && mocha ../build/tests/**/*.test.js"
+    "test": "tsc && cd ./tests && tsc && jest --rootDir ../build/tests"
   },
   "keywords": [
     "typescript",
@@ -31,6 +31,7 @@
     "eslint": "^8.x",
     "eslint-config-airbnb-base": "^15.x",
     "eslint-plugin-simple-import-sort": "^10.x",
+    "jest": "^29.x",
     "mocha": "^10.x",
     "ts-loader": "^9.x",
     "ts-node": "^10.x",

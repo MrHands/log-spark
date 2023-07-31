@@ -1,29 +1,32 @@
-import { expect } from 'chai';
-import { describe } from 'mocha';
+import {
+	describe,
+	expect,
+	test,
+} from '@jest/globals';
 
 import { CaptureConsoleLog } from './helpers';
 
 describe('$logInfo', function () {
-	it('prints to console.log', function () {
+	test('prints to console.log', function () {
 		expect(CaptureConsoleLog(function () {
 			$logInfo('GroceryList', 'Cheese');
-		})).to.be.equal('(GroceryList) Cheese');
+		})).toBe('(GroceryList) Cheese');
 	});
 
-	it('handles variables', function () {
+	test('handles variables', function () {
 		const cheeseLeft = 200;
 		expect(CaptureConsoleLog(function () {
 			$logInfo('Shopping', `Milk: 0, Cheese: ${cheeseLeft}`);
-		})).to.be.equal('(Shopping) Milk: 0, Cheese: 200');
+		})).toBe('(Shopping) Milk: 0, Cheese: 200');
 	});
 
-	it('domain can be an object', function () {
+	test('domain can be an object', function () {
 		expect(CaptureConsoleLog(function () {
 			$logInfo(new Error(), 'Look at the time!');
-		})).to.be.equal('(Error) Look at the time!');
+		})).toBe('(Error) Look at the time!');
 	});
 
-	it('domain can be a class instance', function () {
+	test('domain can be a class instance', function () {
 		class Mouse {
 			_health = 3;
 
@@ -37,6 +40,6 @@ describe('$logInfo', function () {
 		}
 		const mouse = new Mouse();
 
-		expect(CaptureConsoleLog(() => mouse.print())).to.be.equal('([Mouse]) Health - 3');
+		expect(CaptureConsoleLog(() => mouse.print())).toBe('([Mouse]) Health - 3');
 	});
 });

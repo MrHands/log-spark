@@ -2,7 +2,7 @@
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"outDir": "./build",
-		"rootDir": "./source",
+		// "rootDir": "./source",
 
 		"target": "ES6",
 		"module": "CommonJS",
@@ -28,6 +28,7 @@
 	},
 	"include": [
 		".eslintrc.js",
+		"jest.config.ts",
 		"source/",
 		"types/"
 	],
