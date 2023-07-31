@@ -34,6 +34,7 @@
 		".eslintrc.js"
 	],
 	"exclude": [
+		"./integration",
 		"node_modules",
 		"webpack.config.ts"
 	],

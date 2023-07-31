@@ -4,7 +4,7 @@ import {
 	test,
 } from '@jest/globals';
 
-import { CaptureConsoleLog } from './helpers';
+import { CaptureConsoleLog } from '.';
 
 describe('$logInfo', function () {
 	test('prints to console.log', function () {
