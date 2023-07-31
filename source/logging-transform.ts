@@ -75,13 +75,15 @@ function CreateLoggingTransform(
 		}
 
 		if (isException) {
-			return factory.createThrowStatement(
-				factory.createNewExpression(
-					factory.createIdentifier('Error'),
-					undefined,
-					logArguments
-				)
-			);
+			return factory.createImmediatelyInvokedArrowFunction([
+				factory.createThrowStatement(
+					factory.createNewExpression(
+						factory.createIdentifier('Error'),
+						undefined,
+						logArguments
+					)
+				),
+			]);
 		}
 
 		return factory.createCallExpression(
