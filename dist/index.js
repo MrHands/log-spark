@@ -24,7 +24,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const macro_transformer_1 = require("./macro-transformer");
-exports.default = (_program, config, { ts: tsInstance }) => (context) => {
+const LogSparkProgram = (_program, config, { ts: tsInstance }) => (context) => {
     const transformer = new macro_transformer_1.MacroTransformer(context, config, tsInstance);
     return (sourceFile) => transformer.run(sourceFile);
 };
+exports.default = LogSparkProgram;

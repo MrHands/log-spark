@@ -33,5 +33,5 @@ declare global {
     function $logError(domain: object | string, message: string): void;
     function $logFatal(domain: object | string, message: string): void;
 }
-declare const _default: (_program: ts.Program, config: LogSparkPluginConfig, { ts: tsInstance }: TransformerExtras) => (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => ts.Node;
-export default _default;
+declare const LogSparkProgram: (_program: ts.Program, config: LogSparkPluginConfig, { ts: tsInstance }: TransformerExtras) => (context: ts.TransformationContext) => (sourceFile: ts.SourceFile) => ts.Node;
+export default LogSparkProgram;

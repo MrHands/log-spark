@@ -51,7 +51,7 @@ declare global {
 	function $logFatal(domain: object | string, message: string): void;
 }
 
-export default (
+const LogSparkProgram = (
 	_program: ts.Program,
 	config: LogSparkPluginConfig,
 	{ ts: tsInstance }: TransformerExtras
@@ -59,3 +59,5 @@ export default (
 	const transformer = new MacroTransformer(context, config, tsInstance);
 	return (sourceFile: ts.SourceFile) => transformer.run(sourceFile);
 };
+
+export default LogSparkProgram;
