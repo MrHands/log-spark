@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
-    "test": "tsc && cd ./tests/integration && tsc && cd ../ && tsc && jest --rootDir ../build/tests",
+    "test": "tsc && cd ./tests/integration && tsc && cd ../ && tsc && jest",
     "integration": "tsc && cd ./tests/integration && tsc"
   },
   "keywords": [
