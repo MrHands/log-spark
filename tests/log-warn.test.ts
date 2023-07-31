@@ -7,7 +7,7 @@ import {
 import { CaptureConsoleOutput } from '.';
 
 describe('$logWarn', function () {
-	test('prints to console.log', function () {
+	test('prints to console.warn', function () {
 		expect(CaptureConsoleOutput('warn', function () {
 			$logWarn('Fool', 'Joker!');
 		})).toBe('(Fool) Joker!');
