@@ -37,4 +37,14 @@ console.error("(" + this.toString() + ")", `${this._drinks} is too many drinks!`
 
 # Logging severity
 
+| Severity | Config Value | Macro         | Output                                             | Notes                                                                                                    |
+|----------|--------------|---------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| Disabled | -1           | -             | -                                                  | Used to disable options from the configuration settings                                                  |
+| Trace    | 0            | `$logTrace()` | `console.log()`                                    | Output is prefixed with "[TRACE]" to differentiate it from Info messages                                 |
+| Info     | 1            | `$logInfo()`  | `console.log()`                                    |                                                                                                          |
+| Warn     | 2            | `$logWarn()`  | `console.warn()`                                   |                                                                                                          |
+| Error    | 3            | `$logError()` | `console.error()`                                  |                                                                                                          |
+| Fatal    | 4            | `$logFatal()` | `throw new Error()` (default) or `console.error()` | Output is prefixed with "[FATAL]" to differentiate it from Error messages when not throwing an exception |
+| Maximum  | 5            | -             | -                                                  | Used to disable options from the configuration settings                                                  |
+
 # Configuration
