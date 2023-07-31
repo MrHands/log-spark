@@ -1,7 +1,14 @@
 import ts from 'typescript';
 
-function CreateLoggingTransform(levelPrefix: string, consoleMethod: string) {
-	return (factory: ts.NodeFactory, func: ts.CallExpression) => {
+import { type Config } from './config';
+import { ELogSeverity } from './log-severity';
+
+function CreateLoggingTransform(
+	severity: ELogSeverity,
+	levelPrefix: string,
+	consoleMethod: string
+) {
+	return (factory: ts.NodeFactory, func: ts.CallExpression, config: Config) => {
 		if (func.arguments.length < 2) {
 			const source = func.getSourceFile();
 			throw new Error(
@@ -9,6 +16,11 @@ function CreateLoggingTransform(levelPrefix: string, consoleMethod: string) {
 					source.fileName
 				}) Not enough arguments for "${func.expression.getText()}" macro!`
 			);
+		}
+
+		if (severity < config.logSeverityMinimum
+			|| severity > config.logSeverityMaximum) {
+			return factory.createNotEmittedStatement(func);
 		}
 
 		const domain = func.arguments[0];
@@ -68,11 +80,11 @@ function CreateLoggingTransform(levelPrefix: string, consoleMethod: string) {
 	};
 }
 
-const $logTrace = CreateLoggingTransform('[TRACE] ', 'log');
-const $logInfo = CreateLoggingTransform('', 'log');
-const $logWarn = CreateLoggingTransform('', 'warn');
-const $logError = CreateLoggingTransform('', 'error');
-const $logFatal = CreateLoggingTransform('[FATAL] ', 'error');
+const $logTrace = CreateLoggingTransform(ELogSeverity.Trace, '[TRACE] ', 'log');
+const $logInfo = CreateLoggingTransform(ELogSeverity.Info, '', 'log');
+const $logWarn = CreateLoggingTransform(ELogSeverity.Warn, '', 'warn');
+const $logError = CreateLoggingTransform(ELogSeverity.Error, '', 'error');
+const $logFatal = CreateLoggingTransform(ELogSeverity.Fatal, '[FATAL] ', 'error');
 
 export {
 	$logError,

@@ -17,24 +17,29 @@ class MacroTransformer {
 	private readonly _macros: Record<string, TMacroFunction> = {
 		$logTrace: (
 			func: ts.CallExpression,
-			context: ts.TransformationContext
-		) => $logTrace(context.factory, func),
+			context: ts.TransformationContext,
+			config: Config
+		) => $logTrace(context.factory, func, config),
 		$logInfo: (
 			func: ts.CallExpression,
-			context: ts.TransformationContext
-		) => $logInfo(context.factory, func),
+			context: ts.TransformationContext,
+			config: Config
+		) => $logInfo(context.factory, func, config),
 		$logWarn: (
 			func: ts.CallExpression,
-			context: ts.TransformationContext
-		) => $logWarn(context.factory, func),
+			context: ts.TransformationContext,
+			config: Config
+		) => $logWarn(context.factory, func, config),
 		$logError: (
 			func: ts.CallExpression,
-			context: ts.TransformationContext
-		) => $logError(context.factory, func),
+			context: ts.TransformationContext,
+			config: Config
+		) => $logError(context.factory, func, config),
 		$logFatal: (
 			func: ts.CallExpression,
-			context: ts.TransformationContext
-		) => $logFatal(context.factory, func),
+			context: ts.TransformationContext,
+			config: Config
+		) => $logFatal(context.factory, func, config),
 	};
 
 	constructor(
@@ -71,7 +76,7 @@ class MacroTransformer {
 
 			const macro = this._macros[func.expression.getText()];
 			if (typeof macro !== 'undefined') {
-				return macro(func, this._context);
+				return macro(func, this._context, this._config);
 			}
 		}
 
