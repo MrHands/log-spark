@@ -42,11 +42,9 @@ function CreateLoggingTransform(
 		const logArguments: ts.Expression[] = [];
 
 		if (ts.isStringLiteral(domain)) {
-			const textDomain = domain.text;
-
 			logArguments.push(
 				factory.createStringLiteral(
-					`${prefix}(${textDomain})${textMessage}`
+					`${prefix}(${domain.text})${textMessage}`
 				)
 			);
 		} else {
@@ -75,12 +73,24 @@ function CreateLoggingTransform(
 		}
 
 		if (isException) {
+			const joinedMessage = logArguments.length > 1
+				? [factory.createCallExpression(
+					factory.createPropertyAccessExpression(
+						factory.createArrayLiteralExpression(
+							logArguments
+						),
+						factory.createIdentifier('join')
+					),
+					undefined,
+					[factory.createStringLiteral(' ')]
+				)] : logArguments;
+
 			return factory.createImmediatelyInvokedArrowFunction([
 				factory.createThrowStatement(
 					factory.createNewExpression(
 						factory.createIdentifier('Error'),
 						undefined,
-						logArguments
+						joinedMessage
 					)
 				),
 			]);
