@@ -4,9 +4,9 @@ import {
 	test,
 } from '@jest/globals';
 
-import { CaptureConsoleOutput } from '..';
+import { CaptureConsoleOutput } from '../helpers';
 
-describe('logSeverity', function () {
+describe('log severity integration', function () {
 	test('trace level exceeds minimum', function () {
 		expect(CaptureConsoleOutput('log', function () {
 			$logTrace('Bubbles', 'In the air');
@@ -23,5 +23,17 @@ describe('logSeverity', function () {
 		expect(CaptureConsoleOutput('warn', function () {
 			$logWarn('Dog', 'Loves biscuits');
 		})).toBe('(Dog) Loves biscuits');
+	});
+
+	test('error level does not exceed maximum', function () {
+		expect(CaptureConsoleOutput('error', function () {
+			$logError('Coin', 'Heads');
+		})).toBe('(Coin) Heads');
+	});
+
+	test('fatal level exceeds maximum', function () {
+		expect(CaptureConsoleOutput('error', function () {
+			$logFatal('Artist', 'Making music again');
+		})).toBe('');
 	});
 });
