@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
-    "test": "tsc && cd ./tests/disable-all-integration && tsc && cd ../log-severity-integration && tsc && cd ../ && tsc && jest --verbose",
+    "test": "tsc && cd ./tests/disable-all-integration && tsc && cd ../log-severity-integration && tsc&& cd ../production-integration && tsc && cd ../ && tsc && jest --verbose",
     "lint": "eslint --fix"
   },
   "keywords": [

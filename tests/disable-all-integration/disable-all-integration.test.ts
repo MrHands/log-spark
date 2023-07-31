@@ -6,7 +6,7 @@ import {
 
 import { CaptureConsoleOutput } from '../helpers';
 
-describe('log severity integration', function () {
+describe('disable all integration', function () {
 	test('trace is not output', function () {
 		expect(CaptureConsoleOutput('log', function () {
 			$logTrace('Bubbles', 'In the air');

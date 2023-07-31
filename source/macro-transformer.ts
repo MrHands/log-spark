@@ -49,6 +49,8 @@ class MacroTransformer {
 			?? this._config.throwExceptionMinimum;
 		this._config.throwExceptionMaximum = pluginConfig.throwExceptionMaximum
 			?? this._config.throwExceptionMaximum;
+		this._config.isProduction = pluginConfig.isProduction
+			?? this._config.isProduction;
 	}
 
 	run(node: ts.SourceFile): ts.Node {
