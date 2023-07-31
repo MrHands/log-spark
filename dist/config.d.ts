@@ -76,11 +76,11 @@ declare class LogSparkPluginConfig implements PluginConfig {
      */
     logSeverityMaximum?: ELogSeverity;
     /**
-     * Minimum log severity that throw an exception.
+     * Minimum log severity that throws an exception.
      */
     throwExceptionMinimum?: ELogSeverity;
     /**
-     * Maximum log severity that throw an exception. Setting this to ELogSeverity.Maximum will
+     * Maximum log severity that throws an exception. Setting this to ELogSeverity.Maximum will
      * disable logging macros throwing exceptions.
      */
     throwExceptionMaximum?: ELogSeverity;
