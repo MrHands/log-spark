@@ -24,12 +24,12 @@
 
 enum ELogSeverity {
 	Disabled = -1,
-	Trace,
-	Info,
-	Warn,
-	Error,
-	Fatal,
-	Maximum
+	Trace = 0,
+	Info = 1,
+	Warn = 2,
+	Error = 3,
+	Fatal = 4,
+	Maximum = 5
 }
 
 export { ELogSeverity };

@@ -12,6 +12,7 @@
 		"./tests/disable-all-integration",
 		"./tests/log-severity-integration",
 		"./tests/production-integration",
+		"./tests/throw-exception-integration",
 		"./tests",
 		"./",
 	]

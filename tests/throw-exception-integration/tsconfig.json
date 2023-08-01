@@ -1,0 +1,18 @@
+{
+	"$schema": "http://json.schemastore.org/tsconfig",
+	"extends": "../tsconfig.integration.json",
+	"compilerOptions": {
+		"plugins": [
+			{
+				"transform": "../../dist",
+				"throwExceptionMinimum": 0,
+				"throwExceptionMaximum": 3
+			}
+		]
+	},
+	"include": [
+		"../../dist",
+		"**/*.ts",
+		"**/.eslintrc.js"
+	]
+}
