@@ -1,8 +1,12 @@
-(() => {
+(async () => {
 	const { exec } = require('child_process');
 	const commander = require('commander');
 	const fs = require('fs');
 	const path = require('path');
+	const util = require('util');
+
+	const readdirPromise = util.promisify(fs.readdir);
+	const statPromise = util.promisify(fs.stat);
 
 	commander
 		.version('1.0.0')
@@ -53,30 +57,57 @@
 
 	// integration tests
 
-	console.log('Compiling integration tests...');
+	async function CompileIntegrationTests() {
+		console.log('Compiling integration tests...');
 
-	let succeeded = true;
-	fs.readdir(process.cwd(), (_err, list) => {
-		list.forEach((file) => {
-			const integrationDir = path.resolve(process.cwd(), file);
-			fs.stat(integrationDir, (_err, stat) => {
-				if (stat && stat.isDirectory()) {
-					process.chdir(integrationDir);
+		let names = await readdirPromise(process.cwd(), null);
+		console.log('Await!');
+		console.log(names);
+
+		let succeeded = true;
+		let dirs;
+		try {
+			dirs = await readdirPromise(process.cwd(), null, (_err, list) => {
+				const result = [];
+	
+				list.forEach(async (file) => {
+					const integrationDir = path.resolve(process.cwd(), file);
+					const stat = await statPromise(integrationDir);
+	
+					if (stat && stat.isDirectory()) {
+						result.push(integrationDir);
+						console.log(result);
+					}
+				});
+			});
+		} catch (err) {
+			console.error(err);
+		}
+		console.log(dirs);
+
+		/*
+process.chdir(integrationDir);
+
+					console.log(`Compiling ${path.basename(integrationDir)}...`);
 
 					if (RunCommand('npx tsc') !== 0) {
 						succeeded = false;
 						return;
 					}
-				}
-			});
-		});
-	});
+		 */
+	
+		console.log('Await!');
 
-	if (!succeeded) {
-		console.error('Failed to compile.');
-		return;
+		return succeeded;
 	}
 
-	console.log('');
-	console.log('DONE');
+	CompileIntegrationTests().then((succeeded) => {
+		if (!succeeded) {
+			console.error('Failed to compile.');
+			return;
+		}
+	
+		console.log('');
+		console.log('DONE');
+	});
 })();
