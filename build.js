@@ -1,8 +1,9 @@
 (async () => {
-	const { exec } = require('child_process');
+	const { spawn } = require('child_process');
 	const commander = require('commander');
 	const fs = require('fs');
 	const path = require('path');
+	const process = require('process');
 	const util = require('util');
 
 	const readdirPromise = util.promisify(fs.readdir);
@@ -13,26 +14,23 @@
 		.option('-t, --tests', 'run tests')
 		.parse(process.argv);
 
-	function RunCommand(command) {
-		let result = 0;
+	function RunCommand(...command) {
+		let p = spawn(command[0], command.slice(1), { shell: true });
+		return new Promise((resolve) => {
+			p.stdout.on('data', (result) => {
+				console.log(result.toString());
+			});
+			p.stderr.on('data', (result) => {
+				console.error(`Failed to run "${command.join(' ')}": "${result}"`);
+			});
+			p.on('close', (code) => {
+				if (code !== 0) {
+					console.error(`"${command.join(' ')}" returned ${code}`);
+				}
 
-		exec(command, (error, stdout, stderr) => {
-			if (error) {
-				console.error(`Failed to run "${command}": "${error.message}"`);
-				result = -1;
-				throw new Error(`Failed to run "${command}": "${error.message}"`);
-				return;
-			}
-			if (stderr) {
-				console.error(`Failed to run "${command}": "${stderr}"`);
-				result = -1;
-				throw new Error(`Failed to run "${command}": "${stderr}"`);
-				return;
-			}
-			console.log(stdout);
+				resolve(code);
+			});
 		});
-
-		return result;
 	}
 
 	const root = process.cwd();
@@ -42,7 +40,9 @@
 
 		console.log('Compiling library...');
 
-		RunCommand('npx tsc');
+		if (await RunCommand('npx', 'tsc') !== 0) {
+			throw new Error('Failed to compile.');
+		}
 
 		// unit tests
 
@@ -50,7 +50,9 @@
 
 		console.log('Compiling unit tests...');
 
-		RunCommand('npx tsc');
+		if (await RunCommand('npx', 'tsc') !== 0) {
+			throw new Error('Failed to compile.');
+		}
 
 		// integration tests
 
@@ -73,7 +75,9 @@
 
 			console.log(`  - ${path.basename(integrationDir)}`);
 
-			RunCommand('npx tsc');
+			if (await RunCommand('npx', 'tsc') !== 0) {
+				throw new Error('Failed to compile.');
+			}
 		});
 
 		console.log('');
