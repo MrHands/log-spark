@@ -70,18 +70,26 @@ let moneyOwed = 100000;
 
 # Configuration
 
-In order to build with `log-spark`, you must modify your `tsconfig.json`:
+Before you can build with `log-spark`, you must run `npx ts-patch install` on your project, and modify your `tsconfig.json`:
 
 ```json
 {
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"plugins": [
-			{ "transform": "log-spark" }
+			{
+				"transform": "log-spark"
+				// See additional settings in the table below
+			}
 		],
 		"typeRoots": [
-			"log-spark/types"
-		]
+			// Required for adding the macros to the global namespace
+			"./node_modules/log-spark/dist"
+		],
+		"include": [
+			// Required for the compiler to recognize the macros as global functions
+			"./node_modules/log-spark/dist"
+		],
 	},
 	"ts-node": {
 		"compiler": "ts-patch/compiler"
