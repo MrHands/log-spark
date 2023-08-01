@@ -21,26 +21,19 @@
   ],
   "author": "Mr. Hands <mrhands31@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/MrHands/log-spark",
+  "repository": "https://github.com/MrHands/log-spark.git",
   "dependencies": {
+    "ts-patch": "^3.x",
     "typescript": "^5.x"
   },
   "devDependencies": {
-    "@types/chai": "^4.x",
-    "@types/mocha": "^10.x",
     "@typescript-eslint/eslint-plugin": "^6.x",
     "@typescript-eslint/parser": "^6.x",
-    "chai": "^4.x",
     "commander": "^11.x",
     "eslint": "^8.x",
     "eslint-config-airbnb-base": "^15.x",
     "eslint-plugin-simple-import-sort": "^10.x",
     "jest": "^29.x",
-    "mocha": "^10.x",
-    "ts-loader": "^9.x",
-    "ts-node": "^10.x",
-    "ts-patch": "^3.x",
-    "webpack": "^5.x",
-    "webpack-cli": "^5.x"
+    "ts-node": "^10.x"
   }
 }
