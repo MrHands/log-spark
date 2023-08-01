@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "ts-patch install",
     "build": "node build.js",
-    "test": "node build.js --test",
+    "test": "jest --verbose",
     "lint": "eslint --fix"
   },
   "keywords": [

@@ -11,7 +11,6 @@
 
 	program
 		.version('1.0.0')
-		.option('-t, --test', 'run tests')
 		.parse(process.argv);
 
 	const options = program.opts();
@@ -46,53 +45,41 @@
 			throw new Error('Failed to compile.');
 		}
 
-		if (options.test) {
-			// compile unit tests
+		// compile unit tests
 
-			process.chdir(path.resolve(root, 'tests'));
+		process.chdir(path.resolve(root, 'tests'));
 
-			console.log('Compiling unit tests...');
+		console.log('Compiling unit tests...');
+
+		if (await RunCommand('npx', 'tsc') !== 0) {
+			throw new Error('Failed to compile.');
+		}
+
+		// compile integration tests
+
+		console.log('Compiling integration tests...');
+
+		let fileList = await readdirPromise(process.cwd(), null);
+
+		const result = await Promise.all(fileList.map(async (file) => {
+			const integrationDir = path.resolve(process.cwd(), file);
+			const stat = await statPromise(integrationDir);
+			
+			if (stat && stat.isDirectory()) {
+				return integrationDir;
+			}
+		}));
+		const dirs = result.filter((it) => typeof it !== 'undefined');
+
+		dirs.forEach(async (integrationDir) => {
+			process.chdir(integrationDir);
+
+			console.log(`  - ${path.basename(integrationDir)}`);
 
 			if (await RunCommand('npx', 'tsc') !== 0) {
 				throw new Error('Failed to compile.');
 			}
-
-			// compile integration tests
-
-			console.log('Compiling integration tests...');
-
-			let fileList = await readdirPromise(process.cwd(), null);
-
-			const result = await Promise.all(fileList.map(async (file) => {
-				const integrationDir = path.resolve(process.cwd(), file);
-				const stat = await statPromise(integrationDir);
-				
-				if (stat && stat.isDirectory()) {
-					return integrationDir;
-				}
-			}));
-			const dirs = result.filter((it) => typeof it !== 'undefined');
-
-			dirs.forEach(async (integrationDir) => {
-				process.chdir(integrationDir);
-
-				console.log(`  - ${path.basename(integrationDir)}`);
-
-				if (await RunCommand('npx', 'tsc') !== 0) {
-					throw new Error('Failed to compile.');
-				}
-			});
-
-			// run tests
-
-			console.log('Running all tests...');
-
-			process.chdir(path.resolve(root, 'tests'));
-
-			if (await RunCommand('jest', '--verbose') !== 0) {
-				throw new Error('Tests failed.');
-			}
-		}
+		});
 
 		console.log('');
 		console.log('DONE');
