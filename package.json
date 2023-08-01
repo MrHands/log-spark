@@ -1,12 +1,12 @@
 {
   "name": "log-spark",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Typescript transformer functions for logging",
   "files": [
     "dist/"
   ],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/global.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "ts-patch install",
