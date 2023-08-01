@@ -781,6 +781,7 @@ module.exports = {
 		'build/**',
 		'dist/**',
 		'tests/**',
+		'build.js',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {

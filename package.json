@@ -11,7 +11,8 @@
     "build": "tsc",
     "prepare": "ts-patch install",
     "test": "tsc && cd ./tests/disable-all-integration && tsc && cd ../log-severity-integration && tsc&& cd ../production-integration && tsc && cd ../ && tsc && jest --verbose",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix",
+    "bootstrap": "node build.js"
   },
   "keywords": [
     "typescript",
@@ -31,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.x",
     "@typescript-eslint/parser": "^6.x",
     "chai": "^4.x",
+    "commander": "^11.x",
     "eslint": "^8.x",
     "eslint-config-airbnb-base": "^15.x",
     "eslint-plugin-simple-import-sort": "^10.x",

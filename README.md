@@ -92,6 +92,7 @@ Before you can build with `log-spark`, you must run `npx ts-patch install` on yo
 		],
 	},
 	"ts-node": {
+		// NOTE: You must run `npx ts-patch install` first!
 		"compiler": "ts-patch/compiler"
 	}
 }

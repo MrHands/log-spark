@@ -9,5 +9,8 @@
 		"types/",
 		"**/.eslintrc.js",
 		"jest.config.ts"
+	],
+	"exclude": [
+		"build.js"
 	]
 }
