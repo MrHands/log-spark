@@ -1,11 +1,12 @@
 (() => {
-	// const fileSystem = require('fs');
-	const commander = require('commander');
 	const { exec } = require('child_process');
+	const commander = require('commander');
+	const fs = require('fs');
+	const path = require('path');
 
 	commander
 		.version('1.0.0')
-		// .option( '-j, --javascript', 'compile and minify JavaScript files' )
+		.option('-t, --tests', 'run tests')
 		.parse(process.argv);
 
 	function RunCommand(command) {
@@ -28,10 +29,51 @@
 		return result;
 	}
 
+	const root = process.cwd();
+
+	// library
+
 	console.log('Compiling library...');
 
 	if (RunCommand('npx tsc') !== 0) {
-		console.error('Failed to compile Typescript.');
+		console.error('Failed to compile.');
+		return;
+	}
+
+	// unit tests
+
+	process.chdir(path.resolve(root, 'tests'));
+
+	console.log('Compiling unit tests...');
+
+	if (RunCommand('npx tsc') !== 0) {
+		console.error('Failed to compile.');
+		return;
+	}
+
+	// integration tests
+
+	console.log('Compiling integration tests...');
+
+	let succeeded = true;
+	fs.readdir(process.cwd(), (_err, list) => {
+		list.forEach((file) => {
+			const integrationDir = path.resolve(process.cwd(), file);
+			fs.stat(integrationDir, (_err, stat) => {
+				if (stat && stat.isDirectory()) {
+					process.chdir(integrationDir);
+
+					if (RunCommand('npx tsc') !== 0) {
+						succeeded = false;
+						return;
+					}
+				}
+			});
+		});
+	});
+
+	if (!succeeded) {
+		console.error('Failed to compile.');
 		return;
 	}
 
