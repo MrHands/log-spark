@@ -68,9 +68,9 @@ let moneyOwed = 100000;
 | Fatal    | 4            | `$logFatal()` | `throw new Error()` (default) or `console.error()` | Output is prefixed with "[FATAL]" to differentiate it from Error messages when not throwing an exception |
 | Maximum  | 5            | -             | -                                                  | Used to disable options from the configuration settings                                                  |
 
-# Configuration
+# Building with Node.JS
 
-Before you can build with `log-spark`, you must run `npx ts-patch install` on your project, and modify your `tsconfig.json`:
+Before you can use `log-spark` to transform your code, you must run `npx ts-patch install`, and modify your `tsconfig.json`:
 
 ```json
 {
@@ -107,3 +107,55 @@ The object in the `plugins` array takes these additional properties:
 | throwExceptionMinimum | number  | ELogSeverity.Fatal | Minimum log severity that throws an exception.                                                                                        |
 | throwExceptionMaximum | number  | ELogSeverity.Fatal | Maximum log severity that throws an exception. Setting this to `ELogSeverity.Disabled` will disable logging macros throwing exceptions.  |
 | isProduction          | boolean | false              | Compiling for production (true) or development (false).                                                                               |
+
+# Building with Webpack
+
+When using Webpack, you can read your `tsconfig.json` and modify the plugin settings before compiling your Typescript with `ts-loader`:
+
+```typescript
+import { ELogSeverity } from 'log-spark/dist/log-severity';
+
+import tsconfig from './tsconfig.json';
+
+const { compilerOptions } = tsconfig;
+
+export default (env: NodeJS.ProcessEnv) => {
+	const nodeEnv =
+		(env.production != null ? 'production' : null) ??
+		env.NODE_ENV ??
+		'development';
+
+	const isProduction = nodeEnv === 'production';
+
+	const tsCompilerOptions = Object.assign(compilerOptions, {
+		plugins: [
+			{
+				transform: 'log-spark',
+				logSeverityMinimum: isProduction
+					? ELogSeverity.Info
+					: ELogSeverity.Trace,
+				isProduction,
+			},
+		],
+	});
+
+	return {
+		module: {
+			rules: [
+				{
+					test: /\.ts$/u,
+					use: [
+						{
+							loader: require.resolve('ts-loader'),
+							options: {
+								compiler: 'ts-patch/compiler',
+								compilerOptions: tsCompilerOptions,
+							},
+						},
+					],
+				},
+			],
+		},
+	};
+};
+```
