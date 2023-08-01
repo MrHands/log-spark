@@ -20,11 +20,13 @@
 			if (error) {
 				console.error(`Failed to run "${command}": "${error.message}"`);
 				result = -1;
+				throw new Error(`Failed to run "${command}": "${error.message}"`);
 				return;
 			}
 			if (stderr) {
 				console.error(`Failed to run "${command}": "${stderr}"`);
 				result = -1;
+				throw new Error(`Failed to run "${command}": "${stderr}"`);
 				return;
 			}
 			console.log(stdout);
@@ -35,59 +37,48 @@
 
 	const root = process.cwd();
 
-	// library
+	try {
+		// library
 
-	console.log('Compiling library...');
+		console.log('Compiling library...');
 
-	if (RunCommand('npx tsc') !== 0) {
-		console.error('Failed to compile.');
-		return;
+		RunCommand('npx tsc');
+
+		// unit tests
+
+		process.chdir(path.resolve(root, 'tests'));
+
+		console.log('Compiling unit tests...');
+
+		RunCommand('npx tsc');
+
+		// integration tests
+
+		console.log('Compiling integration tests...');
+
+		let fileList = await readdirPromise(process.cwd(), null);
+
+		const result = await Promise.all(fileList.map(async (file) => {
+			const integrationDir = path.resolve(process.cwd(), file);
+			const stat = await statPromise(integrationDir);
+			
+			if (stat && stat.isDirectory()) {
+				return integrationDir;
+			}
+		}));
+		const dirs = result.filter((it) => typeof it !== 'undefined');
+
+		dirs.forEach(async (integrationDir) => {
+			process.chdir(integrationDir);
+
+			console.log(`  - ${path.basename(integrationDir)}`);
+
+			RunCommand('npx tsc');
+		});
+
+		console.log('');
+		console.log('DONE');
+	} catch (error) {
+		console.error(error.message);
 	}
-
-	// unit tests
-
-	process.chdir(path.resolve(root, 'tests'));
-
-	console.log('Compiling unit tests...');
-
-	if (RunCommand('npx tsc') !== 0) {
-		console.error('Failed to compile.');
-		return;
-	}
-
-	// integration tests
-
-	console.log('Compiling integration tests...');
-
-	let fileList = await readdirPromise(process.cwd(), null);
-
-	const result = await Promise.all(fileList.map(async (file) => {
-		const integrationDir = path.resolve(process.cwd(), file);
-		const stat = await statPromise(integrationDir);
-		
-		if (stat && stat.isDirectory()) {
-			return integrationDir;
-		}
-	}));
-	const dirs = result.filter((it) => typeof it !== 'undefined');
-
-	let succeeded = true;
-	dirs.forEach(async (integrationDir) => {
-		process.chdir(integrationDir);
-
-		console.log(`  - ${path.basename(integrationDir)}`);
-
-		if (RunCommand('npx tsc') !== 0) {
-			succeeded = false;
-			return;
-		}
-	});
-
-	if (!succeeded) {
-		console.error('Failed to compile.');
-		return;
-	}
-
-	console.log('');
-	console.log('DONE');
 })();
